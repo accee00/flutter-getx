@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_getx/controllers/data_controller.dart';
+import 'package:flutter_getx/models/detail_data_model.dart';
 import 'package:flutter_getx/routes/route_names.dart';
 import 'package:get/get.dart';
 
@@ -140,13 +141,15 @@ class _ContentPageState extends State<ContentPage> {
                       height: 220,
                       child: PageView.builder(
                           controller: PageController(viewportFraction: 0.88),
-                          itemCount: 4,
+                          itemCount: _controller.data.length,
                           itemBuilder: (_, i) {
+                            final Detail data = _controller.data[i];
                             return GestureDetector(
                               onTap: () {
-                                // Get.to(()=>DetailPage());
-                                //Get.toNamed("/detail_page");
-                                Get.toNamed(RouteNames.getDetailPage());
+                                Get.toNamed(
+                                  RouteNames.getDetailPage(),
+                                  arguments: data,
+                                );
                               },
                               child: Container(
                                 padding:
@@ -165,7 +168,7 @@ class _ContentPageState extends State<ContentPage> {
                                         child: Row(
                                       children: [
                                         Text(
-                                          "Title",
+                                          data.name,
                                           style: TextStyle(
                                               fontSize: 30,
                                               fontWeight: FontWeight.w500,
@@ -178,9 +181,9 @@ class _ContentPageState extends State<ContentPage> {
                                     Container(
                                       width: width,
                                       child: Text(
-                                        "Text",
+                                        data.text,
                                         style: TextStyle(
-                                            fontSize: 20,
+                                            fontSize: 17,
                                             color: Color(0xFFb8eefc)),
                                       ),
                                     ),
@@ -191,20 +194,18 @@ class _ContentPageState extends State<ContentPage> {
                                       thickness: 1.0,
                                     ),
                                     Row(children: [
-                                      for (int i = 0; i < 4; i++)
-                                        Container(
-                                          width: 50,
-                                          height: 50,
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(25),
-                                                image: DecorationImage(
-                                                    image: AssetImage(
-                                                        "img/background.jpg"),
-                                                    fit: BoxFit.cover)),
-                                          ),
-                                        )
+                                      Container(
+                                        width: 50,
+                                        height: 50,
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(25),
+                                              image: DecorationImage(
+                                                  image: AssetImage(data.img),
+                                                  fit: BoxFit.cover)),
+                                        ),
+                                      )
                                     ]),
                                   ],
                                 ),
@@ -259,8 +260,9 @@ class _ContentPageState extends State<ContentPage> {
                             child: ListView.builder(
                                 shrinkWrap: true,
                                 scrollDirection: Axis.vertical,
-                                itemCount: 4,
+                                itemCount: _controller.data.length,
                                 itemBuilder: (_, i) {
+                                  final Detail data = _controller.data[i];
                                   return Container(
                                     width: width,
                                     height: 100,
@@ -277,8 +279,8 @@ class _ContentPageState extends State<ContentPage> {
                                         children: [
                                           CircleAvatar(
                                             radius: 40,
-                                            backgroundImage: AssetImage(
-                                                "img/background.jpg"),
+                                            backgroundImage:
+                                                AssetImage(data.img),
                                           ),
                                           SizedBox(
                                             width: 10,
@@ -290,9 +292,8 @@ class _ContentPageState extends State<ContentPage> {
                                                 CrossAxisAlignment.start,
                                             children: [
                                               Text(
-                                                "Status",
+                                                data.title,
                                                 style: TextStyle(
-                                                    color: Color(0xFFfdebb2),
                                                     fontSize: 12,
                                                     decoration:
                                                         TextDecoration.none),
@@ -303,7 +304,7 @@ class _ContentPageState extends State<ContentPage> {
                                               SizedBox(
                                                 width: 130,
                                                 child: Text(
-                                                  "Text",
+                                                  data.name,
                                                   style: TextStyle(
                                                       color: Color(0xFF3b3f42),
                                                       fontSize: 18,

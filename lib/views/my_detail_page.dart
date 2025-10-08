@@ -1,10 +1,11 @@
+import 'package:flutter_getx/models/detail_data_model.dart';
 import 'package:get/get.dart';
 
 import 'package:flutter/material.dart';
 
 class DetailPage extends StatefulWidget {
-  const DetailPage({super.key});
-
+  const DetailPage({super.key, required this.detail});
+  final Detail detail;
   @override
   _DetailPageState createState() => _DetailPageState();
 }
@@ -48,7 +49,7 @@ class _DetailPageState extends State<DetailPage> {
                     children: [
                       CircleAvatar(
                         radius: 40,
-                        backgroundImage: AssetImage("img/background.jpg"),
+                        backgroundImage: AssetImage(widget.detail.img),
                       ),
                       SizedBox(
                         width: 10,
@@ -58,7 +59,7 @@ class _DetailPageState extends State<DetailPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "name",
+                            widget.detail.name,
                             style: TextStyle(
                                 color: Color(0xFF3b3f42),
                                 fontSize: 18,
@@ -135,7 +136,7 @@ class _DetailPageState extends State<DetailPage> {
                           child: Row(
                         children: [
                           Text(
-                            "Title",
+                            widget.detail.title,
                             style: TextStyle(
                                 fontSize: 30, fontWeight: FontWeight.w500),
                           ),
@@ -146,9 +147,9 @@ class _DetailPageState extends State<DetailPage> {
                       Container(
                         width: width,
                         child: Text(
-                          "Text",
+                          widget.detail.text,
                           style:
-                              TextStyle(fontSize: 20, color: Color(0xFFb8b8b8)),
+                              TextStyle(fontSize: 13, color: Color(0xFFb8b8b8)),
                         ),
                       ),
                       SizedBox(

@@ -16,6 +16,13 @@ class DataController extends GetxController {
     _dataList.value = decodedData.map((item) => Detail.fromJson(item)).toList();
   }
 
+  void updateTempList(int index) {
+    List<Detail> sortedList = List.from(_dataList);
+    Detail targetItem = sortedList[index];
+    sortedList.removeAt(index);
+    sortedList.insert(0, targetItem);
+  }
+
   @override
   void onInit() {
     loadData().then((_) {
